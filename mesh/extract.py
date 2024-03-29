@@ -42,9 +42,4 @@ for c in curves:
 plt.gca().set_aspect('equal', adjustable='box')
 plt.show()
 
-#%%
-
 np.save('curves.npy', np.array(curves, dtype=object))
-
-# %%
-data = np.load('curves.npy', allow_pickle=True)
