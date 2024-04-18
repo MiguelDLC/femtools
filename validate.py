@@ -71,7 +71,7 @@ with zipfile.ZipFile(rapport_path, 'r') as zip:
 
 if not os.path.exists('./Validated'):
     os.makedirs('./Validated')
-with zipfile.ZipFile(f"./Validated/{rapport_fname}", 'w') as new_zip:
+with zipfile.ZipFile(f"./Validated/{rapport_fname}", 'w', zipfile.ZIP_DEFLATED) as new_zip:
     print("Creating new zip file with files")
     for root, dirs, files in os.walk('./tmp-rapport'):
         for file in files:
@@ -111,7 +111,7 @@ if Windows_TDM:
     exec = "myFem.exe"
     res = subprocess.run("cd ./tmp-compil/Project && mkdir build && cd build && cmake .. -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -G \"MinGW Makefiles\" && cmake --build .", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 else:
-    exec = "myFem"
+    exec = "./myFem"
     res = subprocess.run("cd ./tmp-compil/Project && mkdir build && cd build && cmake .. && cmake --build .", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 print(res.stdout.decode('utf-8'))
@@ -143,7 +143,7 @@ print("Execution successful")
 # %%
 if not os.path.exists('./Validated'):
     os.makedirs('./Validated')
-with zipfile.ZipFile(f"./Validated/{project_fname}", 'w') as new_zip:
+with zipfile.ZipFile(f"./Validated/{project_fname}", 'w', zipfile.ZIP_DEFLATED) as new_zip:
     print("Creating new zip file with files")
     for root, dirs, files in os.walk('./tmp'):
         for file in files:
