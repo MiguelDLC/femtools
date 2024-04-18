@@ -7,8 +7,8 @@ import requests
 
 # Configuration A MODIFIER PAR L'ETUDIANT !!!
 # =============================================
-project_path = "group-001-vlegat-jfremacle.zip"
-rapport_path = "group-001-vlegat-jfremacle-rapport.zip"
+project_path = "group001-vlegat-jfremacle.zip"
+rapport_path = "group001-vlegat-jfremacle-rapport.zip"
 Windows_TDM = False # True if using Windows + TDM-GCC, False otherwise
 # =============================================
 
@@ -45,15 +45,15 @@ assert project_fname.endswith(".zip"), "Project file must be a zip file"
 assert rapport_fname.endswith(".zip"), "Rapport file must be a zip file"
 project_parts = project_fname[:-4].split("-")
 rapport_parts = rapport_fname[:-4].split("-")
-assert len(project_parts) == 4, "Project file name must be group-XXX-YYY-ZZZ.zip"
-assert len(rapport_parts) == 5, "Rapport file name must be group-XXX-YYY-ZZZ-rapport.zip"
-assert project_parts[0] == rapport_parts[0], "file names must start with 'group-XXX'"
-assert project_parts[1] == rapport_parts[1] == "%0.3d" % int(project_parts[1]), "group number must be a 3 digit number"
+assert len(project_parts) == 3, "Project file name must be groupXXX-YYY-ZZZ.zip"
+assert len(rapport_parts) == 4, "Rapport file name must be groupXXX-YYY-ZZZ-rapport.zip"
+assert project_parts[0] == rapport_parts[0], "file names must start with 'groupXXX'"
+assert project_parts[0][5:] == rapport_parts[0][5:] == "%0.3d" % int(project_parts[0][5:]), "group number must be a 3 digit number"
+assert project_parts[1] == rapport_parts[1], "group names must be the same"
 assert project_parts[2] == rapport_parts[2], "group names must be the same"
-assert project_parts[3] == rapport_parts[3], "group names must be the same"
-assert rapport_parts[4] == "rapport", "rapport file name must end with '-rapport'"
-assert project_parts[2] != "vlegat", "Non, c'est votre identifiant ucl qu'il faut mettre, vlegat-jfremacle c'est pour l'exemple"
-assert project_parts[3] != "jfremacle", "Non, c'est votre identifiant ucl qu'il faut mettre, vlegat-jfremacle c'est pour l'exemple"
+assert rapport_parts[3] == "rapport", "rapport file name must end with '-rapport'"
+assert project_parts[1] != "vlegat", "Non, c'est votre identifiant ucl qu'il faut mettre, vlegat-jfremacle c'est pour l'exemple"
+assert project_parts[2] != "jfremacle", "Non, c'est votre identifiant ucl qu'il faut mettre, vlegat-jfremacle c'est pour l'exemple"
 
 # %% Rapport content validation
 if os.path.exists('./tmp-rapport'):
