@@ -88,7 +88,7 @@ with zipfile.ZipFile(project_path, 'r') as zip:
             print(f"WARNING ERROR : illegal file : {file}")
             illegal += 1; penalty += 1
             continue
-        if not any(file.endswith(ext) for ext in project_allow):
+        if not any(file.endswith(ext) for ext in project_allow) and '.' in file:
             print(f"WARNING ERROR : illegal file : {file}")
             illegal += 1; penalty += 1
             continue
