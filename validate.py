@@ -5,9 +5,13 @@ import shutil
 import subprocess
 import requests
 
-project_path = "group-002-midelecourt-lninite.zip"
-rapport_path = "group-002-midelecourt-lninite-rapport.zip"
+# Configuration A MODIFIER PAR L'ETUDIANT !!!
+# =============================================
+project_path = "group-001-vlegat-jfremacle.zip"
+rapport_path = "group-001-vlegat-jfremacle-rapport.zip"
 Windows_TDM = False # True if using Windows + TDM-GCC, False otherwise
+# =============================================
+
 
 all_illegal = [
     "/gmsh/",
@@ -48,6 +52,8 @@ assert project_parts[1] == rapport_parts[1] == "%0.3d" % int(project_parts[1]), 
 assert project_parts[2] == rapport_parts[2], "group names must be the same"
 assert project_parts[3] == rapport_parts[3], "group names must be the same"
 assert rapport_parts[4] == "rapport", "rapport file name must end with '-rapport'"
+assert project_parts[2] != "vlegat", "Non, c'est votre identifiant ucl qu'il faut mettre, vlegat-jfremacle c'est pour l'exemple"
+assert project_parts[3] != "jfremacle", "Non, c'est votre identifiant ucl qu'il faut mettre, vlegat-jfremacle c'est pour l'exemple"
 
 # %% Rapport content validation
 if os.path.exists('./tmp-rapport'):
@@ -102,13 +108,15 @@ if os.path.exists('./tmp-compil'):
 shutil.copytree('./tmp', './tmp-compil')
 
 if Windows_TDM:
-    res = subprocess.run("cd ./tmp/Project && mkdir build && cd build && cmake .. -G MinGW Makefiles && cmake --build .", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    exec = "myFem.exe"
+    res = subprocess.run("cd ./tmp-compil/Project && mkdir build && cd build && cmake .. -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -G \"MinGW Makefiles\" && cmake --build .", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 else:
+    exec = "myFem"
     res = subprocess.run("cd ./tmp-compil/Project && mkdir build && cd build && cmake .. && cmake --build .", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 print(res.stdout.decode('utf-8'))
 print(res.stderr.decode('utf-8'))
-if not os.path.exists("./tmp-compil/Project/build/myFem"):
+if not os.path.exists(f"./tmp-compil/Project/build/{exec}"):
     raise Exception("Compilation failed")
 print("Compilation successful")
 
@@ -125,7 +133,7 @@ with open("./tmp-compil/Project/data/mesh.txt", "wb") as f:
 with open("./tmp-compil/Project/data/problem.txt", "wb") as f:
     f.write(r2.content)
 
-res = subprocess.run("cd ./tmp-compil/Project/build && ./myFem", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+res = subprocess.run(f"cd ./tmp-compil/Project/build && {exec}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 print(res.stdout.decode('utf-8'))
 print(res.stderr.decode('utf-8'))
 if not os.path.exists("./tmp-compil/Project/data/UV.txt"):
