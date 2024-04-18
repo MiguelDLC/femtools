@@ -4,12 +4,13 @@ import zipfile
 import shutil
 import subprocess
 import requests
+from sys import platform
 
 # Configuration A MODIFIER PAR L'ETUDIANT !!!
 # =============================================
 project_path = "group001-vlegat-jfremacle.zip"
 rapport_path = "group001-vlegat-jfremacle-rapport.zip"
-Windows_TDM = False # True if using Windows + TDM-GCC, False otherwise
+Windows_TDM = (platform == "win32")  # True if using Windows + TDM-GCC, False otherwise
 # =============================================
 
 
