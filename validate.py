@@ -76,7 +76,7 @@ penalty = 0
 os.makedirs('./tmp-rapport')
 with zipfile.ZipFile(rapport_path, 'r') as zip:
     for file in zip.namelist():
-        ntrip = 0
+        nstrip = 0
         if file.startswith(project_fname[:-4]):
             nstrip = len(project_fname[:-4]) + 1
         if any(i in file for i in all_illegal):
@@ -106,7 +106,7 @@ if os.path.exists('./tmp'):
 os.makedirs('./tmp')
 with zipfile.ZipFile(project_path, 'r') as zip:
     for file in zip.namelist():
-        ntrip = 0
+        nstrip = 0
         if file.startswith(project_fname[:-4]):
             nstrip = len(project_fname[:-4]) + 1
         if not (file.startswith('Project/') or file.startswith(project_fname[:-4])):
